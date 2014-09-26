@@ -1,0 +1,192 @@
+### Documentation
+# This script is called by "model_municipalities.R" to generate its output. This needs to be called by knitr's knit2html function.
+# Nothing really happens in this script. It's merely a template for the output.
+
+---
+title: "Mexico Municipality Model Output"
+output: html_document
+---
+
+Variation: `r sub_output_dir`
+------
+
+Parameters
+--------
+- Subset Data Method: `r subsetData_method`
+- Variable Removal Method: `r varRemove_method`
+- Get Independent Variables Method: `r getIndeps_method`
+- Get Dependent Variables Method: `r getDeps_method`
+- Get Weights Method: `r getWeights_method`
+- Nfold Cross Validation `r nfolds`
+- Elastic-Net Alpha: `r alpha`
+- Set Seed: `r seed_set`
+- Start Time: `r model_start_time`
+- End Time: `r model_end_time`
+- Time Elapsed: `r difftime(model_end_time, model_start_time, units="mins")`
+
+Diagnostics
+------
+```{r diagnostics}
+odd_municipalities
+odd_municipality_deaths_pct
+sort(null_vars)
+sort(infinite_vars)
+sort(string_vars)
+list(rows=nrow(data), columns=ncol(data))
+complete_cases_pct
+sort(names(data))
+hist(deaths_dist, breaks=length(deaths_dist))
+hist(mmr_dist, breaks=length(mmr_dist))
+```
+
+<!--
+Linear LASSO
+--------
+```{r linear_lasso}
+plot(lasso.linear)
+plot(cv.lasso.linear)
+cv.lasso.linear.coef.min[order(-cv.lasso.linear.coef.min),,drop=FALSE]
+cv.lasso.linear.coef.1se[order(-cv.lasso.linear.coef.1se),,drop=FALSE]
+```
+-->
+
+Binomial LASSO
+------
+```{r binomial_lasso}
+plot(lasso.logit)
+plot(cv.lasso.logit)
+#cv.lasso.logit.coef.min[order(-cv.lasso.logit.coef.min),,drop=FALSE]
+cv.lasso.logit.coef.1se[order(-cv.lasso.logit.coef.1se),,drop=FALSE]
+```
+
+<!--
+Poisson LASSO
+------
+```{r poisson_lasso}
+plot(lasso.poisson, label=TRUE)
+plot(cv.lasso.poisson)
+cv.lasso.poisson.coef.min[order(-cv.lasso.poisson.coef.min),,drop=FALSE]
+cv.lasso.poisson.coef.1se[order(-cv.lasso.poisson.coef.1se),,drop=FALSE]
+```
+-->
+
+CHAID
+------
+```{r chaid_anova}
+plot(chaid, uniform=TRUE)
+text(chaid, cex=.8)
+plotcp(chaid)
+sort(chaid$variable.importance, decreasing = TRUE)[1:20]
+```
+
+<!--
+CHAID Poisson
+------
+```{r chaid_poisson}
+plot(chaid.poisson, uniform=TRUE)
+text(chaid.poisson, cex=.8)
+plotcp(chaid.poisson)
+```
+-->
+
+Random Forest
+------
+```{r random_forest}
+print(random.forest)
+varImpPlot(random.forest)
+```
+
+<!--
+Linear Model 1se
+-----
+```{r linear_model_1se}
+summary(linear.model.1se)
+anova(linear.model.1se, "Chisq")
+hist(residuals(linear.model.1se), breaks=nrow(linear.matrix.1se))
+summary(residuals(linear.model.1se)^2)
+summary(abs(residuals(linear.model.1se)))
+plot(residual.tree.linear.1se, uniform=TRUE)
+text(residual.tree.linear.1se, use.n=TRUE, all=TRUE, cex=.8)
+```
+
+Linear Model min
+------
+```{r linear_model_min}
+summary(linear.model.min)
+#anova(linear.model.min, "Chisq")
+hist(residuals(linear.model.min), breaks=nrow(linear.matrix.min))
+#summary(residuals(linear.model.min)^2)
+#summary(abs(residuals(linear.model.min)))
+plot(residual.tree.linear.min, uniform=TRUE)
+text(residual.tree.linear.min, use.n=TRUE, all=TRUE, cex=.8)
+```
+-->
+
+
+Logit Model 1se
+-----
+```{r logit_model_1se}
+summary(logit.model.1se)
+anova(logit.model.1se, "Chisq")
+hist(residuals(logit.model.1se), breaks=nrow(logit.matrix.1se))
+summary(residuals(logit.model.1se)^2)
+summary(abs(residuals(logit.model.1se)))
+plot(residual.tree.logit.1se, uniform=TRUE)
+text(residual.tree.logit.1se, use.n=TRUE, all=TRUE, cex=.8)
+```
+
+<!--
+Logit Model min
+----
+```{r logit_model_min}
+summary(logit.model.min)
+#anova(logit.model.min, "Chisq")
+hist(residuals(logit.model.min), breaks=nrow(logit.matrix.min))
+#summary(residuals(logit.model.min)^2)
+#summary(abs(residuals(logit.model.min)))
+plot(residual.tree.logit.min, uniform=TRUE)
+text(residual.tree.logit.min, use.n=TRUE, all=TRUE, cex=.8)
+```
+-->
+<!--
+Poisson Model 1se
+-----
+```{r poisson_model_1se}
+summary(poisson.model.1se)
+#anova(poisson.model.1se, "Chisq")
+hist(residuals(poisson.model.1se), breaks=nrow(poisson.matrix.1se))
+summary(residuals(poisson.model.1se)^2)
+summary(abs(residuals(poisson.model.1se)))
+plot(residual.tree.poisson.1se, uniform=TRUE)
+text(residual.tree.poisson.1se, use.n=TRUE, all=TRUE, cex=.8)
+```
+
+Poisson Model min
+-----
+```{r poisson_model_min}
+summary(poisson.model.min)
+#anova(poisson.model.min, "Chisq")
+hist(residuals(poisson.model.min), breaks=nrow(poisson.matrix.min))
+summary(residuals(poisson.model.min)^2)
+summary(abs(residuals(poisson.model.min)))
+plot(residual.tree.poisson.min, uniform=TRUE)
+text(residual.tree.poisson.min, use.n=TRUE, all=TRUE, cex=.8)
+```
+-->
+
+<!--
+Trees
+-----
+```{r trees}
+summary(residuals(chaid))
+summary(abs(residuals(chaid)))
+summary(residuals.rf)
+summary(abs(residuals.rf))
+```
+-->
+
+PCA
+---
+```{r pca}
+screeplot(pca, type="lines")
+```

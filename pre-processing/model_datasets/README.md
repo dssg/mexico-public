@@ -1,0 +1,1 @@
+This folder contains scripts that generate datasets that were used for modeling. The order in which the scripts are run does not matter, with the exception that "municipality.sql" and "all_muni_joins.sql" are run last.

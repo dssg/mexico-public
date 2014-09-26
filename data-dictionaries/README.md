@@ -1,0 +1,1 @@
+This is a bunch of data dictionaries from Mexico. The main one we used is the Data Dictionary.xlsx file which have most of the variable translations and contain some variable mappings from the Spanish variable names to our English variable names.

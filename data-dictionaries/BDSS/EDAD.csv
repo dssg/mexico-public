@@ -1,0 +1,8 @@
+"ID","limite.Inferior","limite.Superior","Rango","Descripcion"
+1,0,0,0,"<1 año"
+2,1,1,4,"01 a 04 years"
+3,2,5,9,"05 a 14 years"
+4,3,15,19,"15 a 44 years"
+5,4,45,49,"45 a 64 years"
+6,5,65,998,"65 y more years"
+7,6,999,999,"No Especificado"

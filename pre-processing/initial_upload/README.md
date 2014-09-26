@@ -1,0 +1,1 @@
+These scripts are used to upload the initial datasets given to us by Mexico to our PostGRES server where we then do a bit of analysis and munging. The icd10_codes are just a bunch of downloaded tables that give us some reference to what the ICD10 codes mean.
